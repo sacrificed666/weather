@@ -1,0 +1,8 @@
+.main {
+  flex: 1;
+  inline-size: 100%;
+  max-inline-size: calc(var(--layout-width) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding: 0.5rem var(--gutter-right) 0 var(--gutter-left);
+  outline: none;
+}

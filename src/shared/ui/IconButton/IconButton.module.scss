@@ -1,0 +1,43 @@
+@use "@/shared/styles/mixins" as *;
+
+.button {
+  @include glass(var(--radius-full), var(--glass-tint), var(--glass-blur));
+  @include pressable;
+
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  padding: 0;
+  border: 0;
+  color: var(--color-text);
+
+  @include hover {
+    background: var(--glass-tint-strong);
+  }
+
+  &[aria-pressed="true"] {
+    color: var(--color-star);
+  }
+
+  &:disabled {
+    cursor: progress;
+  }
+
+  &[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+.spinner {
+  animation: spin 0.9s linear infinite;
+}
+
+// The busy icon turns
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}

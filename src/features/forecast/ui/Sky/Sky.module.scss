@@ -1,0 +1,147 @@
+@use "@/shared/styles/mixins" as *;
+
+// The fixed sky behind the page
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-middle) 55%, var(--sky-bottom) 100%);
+  contain: strict;
+  animation: fade-in var(--duration-slow) var(--ease-out);
+
+  @include hide-in-print;
+}
+
+// A soft light from the sun or the moon
+.glow {
+  position: absolute;
+  inset-block-start: -35vmax;
+  inset-inline-end: -25vmax;
+  inline-size: 85vmax;
+  block-size: 85vmax;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in oklab, var(--sky-glow) 70%, transparent),
+    color-mix(in oklab, var(--sky-glow) 22%, transparent) 55%,
+    transparent
+  );
+  opacity: 0.7;
+  animation: drift 48s ease-in-out infinite alternate;
+}
+
+// Stars, rain, snow or clouds over the gradient
+.texture {
+  position: absolute;
+  inset: -260px 0 0;
+  opacity: 0;
+}
+
+// Stars at night, fewer behind clouds
+[data-sky="clear-night"],
+[data-sky="cloudy-night"] {
+  .texture {
+    opacity: 0.8;
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 33% 42%, #fff 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 58% 12%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 76% 36%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 88% 8%, #fff 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 22% 70%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 64% 64%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 92% 78%, #fff 50%, transparent 51%);
+    background-size: 340px 340px;
+    mask-image: linear-gradient(180deg, #000, transparent 75%);
+  }
+}
+
+[data-sky="cloudy-night"] .texture {
+  opacity: 0.35;
+}
+
+// Falling streaks for rain and storms
+[data-sky="rain"],
+[data-sky="storm"] {
+  .texture {
+    opacity: 0.22;
+    background-image: repeating-linear-gradient(
+      105deg,
+      transparent 0 14px,
+      rgb(255 255 255 / 0.55) 14px 15px,
+      transparent 15px 38px
+    );
+    background-size: 100% 180px;
+    animation: fall 0.9s linear infinite;
+  }
+}
+
+// Slowly falling flakes
+[data-sky="snow"] .texture {
+  opacity: 0.75;
+  background-image:
+    radial-gradient(2px 2px at 10% 20%, #fff 50%, transparent 51%),
+    radial-gradient(3px 3px at 30% 60%, #fff 50%, transparent 51%),
+    radial-gradient(2px 2px at 55% 30%, #fff 50%, transparent 51%),
+    radial-gradient(2.5px 2.5px at 75% 75%, #fff 50%, transparent 51%),
+    radial-gradient(2px 2px at 90% 40%, #fff 50%, transparent 51%);
+  background-size: 260px 260px;
+  animation: snowfall 14s linear infinite;
+}
+
+// Drifting haze for fog and clouds
+[data-sky="fog"] .texture,
+[data-sky="cloudy-day"] .texture {
+  opacity: 0.5;
+  background:
+    radial-gradient(60% 18% at 20% 30%, rgb(255 255 255 / 0.35), transparent 70%),
+    radial-gradient(55% 16% at 75% 55%, rgb(255 255 255 / 0.28), transparent 70%),
+    radial-gradient(70% 20% at 40% 80%, rgb(255 255 255 / 0.25), transparent 70%);
+  animation: drift 60s ease-in-out infinite alternate;
+}
+
+// The sky fades in after a change of weather
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+// Clouds drift slowly
+@keyframes drift {
+  to {
+    translate: -6vmax 4vmax;
+    scale: 1.08;
+  }
+}
+
+// Rain falls
+@keyframes fall {
+  to {
+    translate: 0 180px;
+  }
+}
+
+// Snow falls
+@keyframes snowfall {
+  to {
+    translate: 0 260px;
+  }
+}
+
+// Reduced effects keep the sky still
+:root[data-effects="reduced"] {
+  .glow,
+  .texture {
+    animation: none;
+  }
+}
+
+// Reduced motion keeps the sky still
+@media (prefers-reduced-motion: reduce) {
+  .glow,
+  .texture {
+    animation: none !important;
+  }
+}

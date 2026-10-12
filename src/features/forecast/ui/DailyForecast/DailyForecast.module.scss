@@ -1,0 +1,85 @@
+// The width the columns adapt to
+.frame {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  container-type: inline-size;
+}
+
+// Rows share the height of the card equally, so a tall card has no gap at the end
+.days {
+  position: relative;
+  display: grid;
+  flex: 1;
+  // The day takes the room its longest name needs from the range bar
+  grid-template-columns: minmax(4.5rem, max-content) 2.5rem 2.75rem 2.4rem minmax(2.5rem, 1fr) 2.4rem;
+  grid-auto-rows: minmax(2.9rem, 1fr);
+  column-gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  // Closer columns on a phone, so the longest word for today still fits
+  @container (width < 22rem) {
+    grid-template-columns: minmax(4.5rem, max-content) 2.5rem 2.75rem 2.4rem minmax(2.25rem, 1fr) 2.4rem;
+    column-gap: 0.3rem;
+  }
+
+  // Tighter columns on a narrow card
+  @container (width < 20rem) {
+    grid-template-columns: minmax(3rem, max-content) 2.25rem 2.4rem 2rem minmax(2.25rem, 1fr) 2rem;
+    column-gap: 0.3rem;
+    font-size: 0.92rem;
+  }
+}
+
+// Day, icon, chance of rain, low, range and high on the columns of the list
+.day {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: center;
+  font-weight: 600;
+
+  & + & {
+    border-block-start: 1px solid var(--color-separator);
+  }
+}
+
+.weekday {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}
+
+.condition {
+  display: grid;
+  justify-items: center;
+}
+
+.chance {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+  color: var(--color-accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.low {
+  color: var(--color-text-tertiary);
+  text-align: end;
+}
+
+.high {
+  text-align: end;
+}
+
+.bar {
+  display: block;
+  min-inline-size: 0;
+}

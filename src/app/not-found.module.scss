@@ -1,0 +1,78 @@
+@use "@/shared/styles/mixins" as *;
+
+.page {
+  display: grid;
+  flex: 1;
+  align-content: start;
+  justify-items: center;
+  gap: 1rem;
+  padding: 1.25rem var(--gutter-right) 2rem var(--gutter-left);
+}
+
+.brand {
+  @include pressable;
+
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding-inline-end: 0.5rem;
+  border-radius: var(--radius-full);
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.logo {
+  flex: none;
+  border-radius: 28%;
+  box-shadow: 0 4px 12px -4px var(--color-logo-shadow);
+}
+
+.notFound {
+  @include glass($content: true);
+
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  inline-size: 100%;
+  max-inline-size: 32rem;
+  margin-block: clamp(1rem, 8vh, 4rem);
+  padding: 2rem;
+  text-align: center;
+}
+
+.badge {
+  display: grid;
+  place-items: center;
+  inline-size: 4rem;
+  block-size: 4rem;
+  border-radius: 50%;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.title {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.text {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.link {
+  @include pressable;
+
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  margin-block-start: 0.75rem;
+  padding: 0 1.25rem;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-weight: 600;
+  text-decoration: none;
+}

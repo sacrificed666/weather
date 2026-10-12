@@ -1,0 +1,39 @@
+# Production build that search engines must not index
+name: weather-staging
+
+services:
+  app:
+    image: weather:staging
+    build:
+      target: runtime
+      args:
+        APP_ENV: staging
+      # The env file reaches the build as a secret, never as a layer
+      secrets:
+        - env
+    # Settings and keys, read when the container starts
+    env_file: .env.staging
+    # APP_ENV decides whether search engines may index the site
+    environment:
+      APP_ENV: staging
+    # APP_PORT changes the port on the host
+    ports:
+      - "${APP_PORT:-3001}:3000"
+    # Comes back after a crash or a reboot
+    restart: unless-stopped
+    # Locked down: no privileges and bounded resources; ISR still writes to .next
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 200
+    mem_limit: 512m
+    cpus: 1
+    # Rotates the logs at 10 MB, keeping three files
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+
+# The env file of the environment, passed to the build
+secrets:
+  env:
+    file: .env.staging

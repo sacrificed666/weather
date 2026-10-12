@@ -1,0 +1,75 @@
+@use "mixins" as *;
+
+// One column on phones, two on tablets and three on wide screens
+@mixin grid {
+  container: dashboard / inline-size;
+  display: grid;
+  grid-template-areas: "current" "hourly" "daily" "sun" "wind" "air" "details";
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+
+  @include from("md") {
+    grid-template-areas:
+      "current current"
+      "hourly hourly"
+      "daily sun"
+      "daily wind"
+      "air air"
+      "details details";
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include from("lg") {
+    grid-template-areas:
+      "current current daily"
+      "hourly hourly daily"
+      "sun wind air"
+      "details details details";
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+// Tiles in rows of two, three or six, so no row is left half empty
+@mixin details {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.75rem;
+
+  > * {
+    grid-column: span 3;
+  }
+
+  // A lone tile in the last row takes the whole row
+  > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
+  @container dashboard (width >= 40rem) {
+    gap: 1rem;
+
+    > *,
+    > :last-child:nth-child(odd) {
+      grid-column: span 2;
+    }
+
+    // Five tiles: the last two share the second row
+    > :nth-child(4):nth-last-child(2),
+    > :nth-child(5):last-child {
+      grid-column: span 3;
+    }
+  }
+
+  @container dashboard (width >= 70rem) {
+    > *,
+    > :last-child:nth-child(odd),
+    > :nth-child(4):nth-last-child(2),
+    > :nth-child(5):last-child {
+      grid-column: auto;
+    }
+
+    // Five tiles share one row evenly
+    &:has(> :nth-child(5):last-child) {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+}

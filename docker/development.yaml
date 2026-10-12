@@ -1,0 +1,31 @@
+# Dev server with hot reload, run with: up --watch
+name: weather-development
+
+services:
+  app:
+    image: weather:development
+    build:
+      target: development
+    # Settings and keys, read when the container starts
+    env_file:
+      - path: .env
+        required: false
+      - path: .env.local
+        required: false
+    # APP_ENV decides whether search engines may index the site
+    environment:
+      APP_ENV: development
+    # APP_PORT changes the port on the host
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    # Syncs edits into the container; a new lockfile rebuilds it
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - node_modules/
+            - .next/
+        - action: rebuild
+          path: package-lock.json

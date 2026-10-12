@@ -1,0 +1,50 @@
+@use "@/shared/styles/dashboard";
+
+.dashboard {
+  @include dashboard.grid;
+}
+
+.current {
+  grid-area: current;
+  animation: rise var(--duration-slow) var(--ease-spring) backwards;
+}
+
+.hourly {
+  grid-area: hourly;
+  animation: rise var(--duration-slow) var(--ease-spring) 60ms backwards;
+}
+
+.daily {
+  grid-area: daily;
+  animation: rise var(--duration-slow) var(--ease-spring) 120ms backwards;
+}
+
+.sun {
+  grid-area: sun;
+  animation: rise var(--duration-slow) var(--ease-spring) 180ms backwards;
+}
+
+.wind {
+  grid-area: wind;
+  animation: rise var(--duration-slow) var(--ease-spring) 210ms backwards;
+}
+
+.air {
+  grid-area: air;
+  animation: rise var(--duration-slow) var(--ease-spring) 240ms backwards;
+}
+
+.details {
+  @include dashboard.details;
+
+  grid-area: details;
+  animation: rise var(--duration-slow) var(--ease-spring) 270ms backwards;
+}
+
+// Cards rise into place when the forecast arrives
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+}
