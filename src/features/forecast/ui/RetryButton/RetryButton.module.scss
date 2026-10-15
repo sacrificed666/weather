@@ -1,0 +1,37 @@
+@use "@/shared/styles/mixins" as *;
+
+.button {
+  @include pressable;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-block-size: 2.75rem;
+  padding: 0 1.25rem;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-weight: 600;
+  box-shadow: 0 6px 18px color-mix(in oklab, var(--color-accent) 35%, transparent);
+
+  @include hover {
+    background: color-mix(in oklab, var(--color-accent) 88%, #fff);
+  }
+
+  &:disabled {
+    cursor: progress;
+    opacity: 0.8;
+  }
+}
+
+.spinning {
+  animation: spin 0.9s linear infinite;
+}
+
+// The busy icon turns
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}

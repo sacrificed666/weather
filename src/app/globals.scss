@@ -1,0 +1,200 @@
+@use "@/shared/styles/mixins" as *;
+@use "@/shared/styles/skies";
+@use "@/shared/styles/tokens";
+
+// Shared and light tokens by default
+:root {
+  @include tokens.shared;
+  @include tokens.light;
+}
+
+// Dark tokens when picked in the settings
+:root[data-theme="dark"] {
+  @include tokens.dark;
+}
+
+// Dark tokens when the system theme is dark
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="system"] {
+    @include tokens.dark;
+  }
+}
+
+// Reduced effects trade blur for denser tints and short shadows
+:root[data-effects="reduced"] {
+  @include tokens.reduced-light;
+}
+
+// Reduced tints for the dark theme
+:root[data-effects="reduced"][data-theme="dark"] {
+  @include tokens.reduced-dark;
+}
+
+// Reduced tints for a dark system theme
+@media (prefers-color-scheme: dark) {
+  :root[data-effects="reduced"][data-theme="system"] {
+    @include tokens.reduced-dark;
+  }
+}
+
+// Sky gradients for every weather, light and dark
+@include skies.sky-colors("light");
+
+:root[data-theme="dark"] {
+  @include skies.sky-colors("dark");
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="system"] {
+    @include skies.sky-colors("dark");
+  }
+}
+
+// Sizes include padding and borders
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+// No font inflation on phones
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+// Full height column with the footer at the bottom
+body {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 100svh;
+  margin: 0;
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  background-color: var(--backdrop-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Fixed backdrop layer, cheaper to scroll than background-attachment: fixed
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(120% 80% at 80% -10%, color-mix(in oklab, var(--color-accent) 22%, transparent), transparent 60%),
+    var(--backdrop-base);
+  pointer-events: none;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+}
+
+img,
+svg {
+  display: block;
+}
+
+::selection {
+  background: var(--color-accent-soft);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: fixed;
+  inset-block-start: 0.75rem;
+  inset-inline-start: 0.75rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-weight: 600;
+  text-decoration: none;
+  translate: 0 -200%;
+  transition: translate var(--duration-base) var(--ease-out);
+
+  &:focus-visible {
+    translate: 0 0;
+  }
+}
+
+.visually-hidden {
+  @include visually-hidden;
+}
+
+// Stronger text when the system asks for more contrast
+@media (prefers-contrast: more) {
+  :root[data-theme] {
+    @include tokens.more-contrast;
+  }
+}
+
+// Animations and transitions stop for reduced motion
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// Paper is white, so a printed forecast uses the light tokens in any theme
+@media print {
+  :root,
+  :root[data-theme],
+  :root[data-effects][data-theme] {
+    @include tokens.light;
+    @include tokens.reduced-light;
+  }
+
+  body {
+    background: none;
+  }
+
+  // Glass, shadows and motion mean nothing on paper
+  *,
+  *::before,
+  *::after {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}

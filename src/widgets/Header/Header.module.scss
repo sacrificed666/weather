@@ -1,0 +1,53 @@
+@use "@/shared/styles/mixins" as *;
+
+.header {
+  padding-block: 0.75rem;
+  padding-inline: var(--gutter-left) var(--gutter-right);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-inline-size: var(--layout-width);
+  min-block-size: calc(var(--header-height) - 1.5rem);
+  margin-inline: auto;
+}
+
+.brand {
+  @include pressable;
+
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 0.625rem;
+  margin-inline-end: auto;
+  padding-inline-end: 0.5rem;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+}
+
+.logo {
+  flex: none;
+  border-radius: 28%;
+  box-shadow: 0 4px 12px -4px var(--color-logo-shadow);
+}
+
+.name {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+
+  // Only the logo on phones; the name stays for screen readers
+  @include below("md") {
+    @include visually-hidden;
+  }
+}
+
+.actions {
+  display: flex;
+  flex: none;
+  gap: 0.5rem;
+
+  @include hide-in-print;
+}

@@ -1,0 +1,161 @@
+@use "sass:map";
+
+// Tablet and desktop widths
+$breakpoints: (
+  "md": 720px,
+  "lg": 1100px,
+);
+
+// Styles from a breakpoint up
+@mixin from($name) {
+  @media (width >= map.get($breakpoints, $name)) {
+    @content;
+  }
+}
+
+// Styles below a breakpoint
+@mixin below($name) {
+  @media (width < map.get($breakpoints, $name)) {
+    @content;
+  }
+}
+
+// Hover styles only for a mouse or a trackpad
+@mixin hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+// The keyboard focus outline
+@mixin focus-ring($offset: 2px) {
+  &:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: $offset;
+  }
+}
+
+// A springy press for buttons
+@mixin pressable {
+  transition:
+    scale var(--duration-fast) var(--ease-spring),
+    background-color var(--duration-fast) ease,
+    color var(--duration-fast) ease;
+
+  &:active {
+    scale: 0.94;
+  }
+}
+
+// Hidden on screen but read by screen readers
+@mixin visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+// A thin light rim along the edge of glass
+@mixin rim {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    160deg,
+    var(--glass-rim) 0%,
+    color-mix(in oklab, var(--glass-rim) 25%, transparent) 35%,
+    transparent 60%,
+    var(--glass-rim-shade) 100%
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+// Frosted glass with its tint, blur, rim and shadow
+@mixin glass(
+  $radius: var(--radius-lg),
+  $tint: var(--glass-tint),
+  $blur: var(--glass-blur),
+  $content: false,
+  $shadow: var(--glass-shadow)
+) {
+  position: relative;
+  border-radius: $radius;
+  background: linear-gradient(170deg, var(--glass-sheen), transparent 40%), $tint;
+  backdrop-filter: blur($blur) saturate(var(--glass-saturate));
+  box-shadow:
+    inset 0 1px 0 var(--glass-highlight),
+    $shadow;
+
+  &::before {
+    @include rim;
+  }
+
+  // Reduced effects: flat glass without blur or masked rims
+  :where(:root[data-effects="reduced"]) & {
+    @if $content {
+      background: linear-gradient(170deg, var(--glass-sheen), transparent 40%), var(--glass-tint-content);
+    }
+
+    backdrop-filter: none;
+    box-shadow:
+      inset 0 1px 0 var(--glass-highlight),
+      inset 0 0 0 1px var(--glass-hairline),
+      $shadow;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    background: var(--glass-solid);
+    backdrop-filter: none;
+  }
+
+  @media (prefers-contrast: more) {
+    background: var(--glass-solid);
+    backdrop-filter: none;
+    box-shadow: none;
+    outline: 1px solid var(--color-separator);
+  }
+
+  @media (forced-colors: active) {
+    border: 1px solid CanvasText;
+  }
+}
+
+// The small caps label above a card
+@mixin section-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  // Long words such as NIEDERSCHLAG break inside narrow cards
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
+// Left out of a printed page
+@mixin hide-in-print {
+  @media print {
+    display: none;
+  }
+}

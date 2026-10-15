@@ -1,0 +1,111 @@
+@use "@/shared/styles/mixins" as *;
+@use "@/shared/styles/dashboard";
+
+.grid {
+  @include dashboard.grid;
+}
+
+.current {
+  grid-area: current;
+}
+
+.hourly {
+  grid-area: hourly;
+}
+
+.daily {
+  grid-area: daily;
+}
+
+.sun {
+  grid-area: sun;
+}
+
+.wind {
+  grid-area: wind;
+}
+
+.air {
+  grid-area: air;
+}
+
+.details {
+  @include dashboard.details;
+
+  grid-area: details;
+}
+
+.card {
+  @include glass($content: true);
+  --skeleton-radius: calc(var(--radius-lg) - 1.25rem);
+
+  display: grid;
+  align-content: start;
+  gap: 0.9rem;
+  padding: 1.25rem;
+}
+
+.title {
+  inline-size: 40%;
+  block-size: 2rem;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.icon {
+  flex: none;
+  inline-size: 8rem;
+  block-size: 8rem;
+  border-radius: 50%;
+}
+
+.lines {
+  display: grid;
+  flex: 1;
+  gap: 0.6rem;
+}
+
+.temperature {
+  inline-size: 9rem;
+  block-size: 5rem;
+}
+
+.line {
+  inline-size: 60%;
+  block-size: 1.25rem;
+}
+
+.short {
+  inline-size: 40%;
+  block-size: 1rem;
+}
+
+.label {
+  inline-size: 8rem;
+  block-size: 0.85rem;
+}
+
+.strip {
+  block-size: 7rem;
+}
+
+.row {
+  block-size: 2.4rem;
+}
+
+.tile {
+  min-block-size: 7rem;
+}
+
+.block {
+  block-size: 7rem;
+}
+
+.value {
+  inline-size: 50%;
+  block-size: 2.25rem;
+}

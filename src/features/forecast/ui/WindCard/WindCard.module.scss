@@ -1,0 +1,81 @@
+.wind {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  container-type: inline-size;
+}
+
+.rows {
+  display: grid;
+  flex: 1;
+  min-inline-size: 0;
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0 0.75rem;
+  padding-block: 0.4rem;
+
+  & + & {
+    border-block-start: 1px solid var(--color-separator);
+  }
+
+  dt {
+    color: var(--color-text-secondary);
+    font-weight: 500;
+  }
+
+  dd {
+    margin: 0;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+}
+
+// The compass grows with the card, so a tall card has no empty band
+.compass {
+  flex: none;
+  inline-size: clamp(5.5rem, 36cqi, 8.5rem);
+  block-size: auto;
+  aspect-ratio: 1;
+}
+
+.dial {
+  fill: var(--color-fill);
+  stroke: var(--color-separator);
+}
+
+.tick {
+  stroke: var(--color-text-tertiary);
+  stroke-width: 1;
+  opacity: 0.6;
+}
+
+.majorTick {
+  stroke: var(--color-text);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.cardinal {
+  fill: var(--color-text-secondary);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.arrow {
+  fill: var(--color-text);
+  stroke: var(--color-text);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hub {
+  fill: var(--color-text);
+}

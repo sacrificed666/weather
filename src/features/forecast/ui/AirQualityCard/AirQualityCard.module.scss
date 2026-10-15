@@ -1,0 +1,133 @@
+@use "sass:list";
+
+$levels: var(--air-1), var(--air-2), var(--air-3), var(--air-4), var(--air-5);
+
+.card {
+  container-type: inline-size;
+}
+
+.body {
+  display: grid;
+  grid-template-areas: "summary" "scale" "pollutants";
+  gap: 1rem;
+
+  // On a wide card the pollutants sit beside the summary and the scale
+  @container (width >= 40rem) {
+    grid-template-areas:
+      "summary pollutants"
+      "scale pollutants";
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    align-items: center;
+    gap: 0.75rem 2rem;
+  }
+}
+
+.summary {
+  display: grid;
+  grid-area: summary;
+  gap: 0.25rem;
+}
+
+.level {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.2;
+
+  &::before {
+    content: "";
+    inline-size: 0.75rem;
+    block-size: 0.75rem;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 0 4px color-mix(in oklab, currentColor 25%, transparent);
+  }
+}
+
+.advice {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.scale {
+  display: grid;
+  grid-area: scale;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.3rem;
+}
+
+.segment {
+  block-size: 0.5rem;
+  border-radius: var(--radius-full);
+  opacity: 0.35;
+  transition: opacity var(--duration-base) ease;
+
+  &[data-active] {
+    opacity: 1;
+    box-shadow: 0 0 10px color-mix(in oklab, currentColor 60%, transparent);
+  }
+
+  // Scale segments stay visible in forced colours mode
+  @media (forced-colors: active) {
+    border: 1px solid CanvasText;
+
+    &[data-active] {
+      background: Highlight;
+    }
+  }
+}
+
+@for $index from 1 through 5 {
+  .level[data-level="#{$index}"]::before {
+    color: list.nth($levels, $index);
+  }
+
+  .segment[data-level="#{$index}"] {
+    color: list.nth($levels, $index);
+    background: list.nth($levels, $index);
+  }
+}
+
+.pollutants {
+  display: grid;
+  grid-area: pollutants;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin: 0;
+
+  // Four pollutants in a row unless the card is very narrow
+  @container (width >= 17rem) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.4rem;
+  }
+}
+
+.pollutant {
+  display: grid;
+  gap: 0.1rem;
+  min-inline-size: 0;
+  padding: 0.45rem 0.5rem;
+  border-radius: var(--radius-in-card);
+  background: var(--color-fill);
+
+  dt {
+    color: var(--color-text-secondary);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  dd {
+    margin: 0;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+}
+
+.unit {
+  color: var(--color-text-tertiary);
+  font-size: 0.65rem;
+  font-weight: 500;
+}

@@ -1,0 +1,132 @@
+@use "sass:list";
+@use "sass:map";
+
+// Top, middle and bottom colours of every sky, light and dark
+$skies: (
+  "clear-day": (
+    "light": (
+      #3d8bf2,
+      #7fb8f8,
+      #cfe6ff,
+      #ffd56b,
+    ),
+    "dark": (
+      #0a2a5e,
+      #164e93,
+      #2f73bd,
+      #f6c454,
+    ),
+  ),
+  "clear-night": (
+    "light": (
+      #4a5aa8,
+      #7d86c9,
+      #c9cdeb,
+      #c7d2ff,
+    ),
+    "dark": (
+      #040817,
+      #0b1436,
+      #18245a,
+      #7d8cff,
+    ),
+  ),
+  "cloudy-day": (
+    "light": (
+      #7f97b5,
+      #b5c5d8,
+      #e6edf5,
+      #ffffff,
+    ),
+    "dark": (
+      #182334,
+      #2a3a52,
+      #40536e,
+      #9db4d6,
+    ),
+  ),
+  "cloudy-night": (
+    "light": (
+      #56627e,
+      #8791a9,
+      #c7cdd9,
+      #aab4d4,
+    ),
+    "dark": (
+      #080b12,
+      #121826,
+      #1f2738,
+      #5c6a8a,
+    ),
+  ),
+  "rain": (
+    "light": (
+      #5f7895,
+      #98abc2,
+      #d6e0ea,
+      #9fc0e8,
+    ),
+    "dark": (
+      #0b1522,
+      #172638,
+      #24384f,
+      #4f7db0,
+    ),
+  ),
+  "storm": (
+    "light": (
+      #4f4a6e,
+      #847fa3,
+      #c6c2da,
+      #b9a6ff,
+    ),
+    "dark": (
+      #0c0a17,
+      #1a1630,
+      #2c2549,
+      #8a6cff,
+    ),
+  ),
+  "snow": (
+    "light": (
+      #9fb8d4,
+      #d0deec,
+      #f4f8fc,
+      #ffffff,
+    ),
+    "dark": (
+      #18222f,
+      #2a3a4f,
+      #41566f,
+      #cfe3ff,
+    ),
+  ),
+  "fog": (
+    "light": (
+      #96a1ad,
+      #c4cbd2,
+      #eceff2,
+      #ffffff,
+    ),
+    "dark": (
+      #121417,
+      #1f2328,
+      #31363d,
+      #8d96a3,
+    ),
+  ),
+);
+
+// Sky colour variables for every weather in one theme
+@mixin sky-colors($mode) {
+  @each $name, $modes in $skies {
+    $colors: map.get($modes, $mode);
+
+    [data-sky="#{$name}"] {
+      --sky-top: #{list.nth($colors, 1)};
+      --sky-middle: #{list.nth($colors, 2)};
+      --sky-bottom: #{list.nth($colors, 3)};
+      --sky-glow: #{list.nth($colors, 4)};
+    }
+  }
+}

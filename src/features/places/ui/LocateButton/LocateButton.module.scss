@@ -1,0 +1,33 @@
+@use "@/shared/styles/mixins" as *;
+
+.locate {
+  position: relative;
+  flex: none;
+}
+
+.message {
+  @include glass(var(--radius-md), var(--glass-tint-overlay), var(--glass-blur-thick));
+
+  position: absolute;
+  inset-block-start: calc(100% + 0.5rem);
+  inset-inline-end: 0;
+  z-index: 30;
+  inline-size: max-content;
+  max-inline-size: min(18rem, calc(100vw - 2 * var(--gutter)));
+  padding: 0.65rem 0.85rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  animation: appear var(--duration-base) var(--ease-spring);
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+// The location message fades in
+@keyframes appear {
+  from {
+    opacity: 0;
+    translate: 0 -4px;
+  }
+}

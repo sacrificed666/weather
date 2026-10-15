@@ -1,0 +1,158 @@
+// Colours, glass and shadows of the light theme
+@mixin light {
+  color-scheme: light;
+
+  --color-text: rgb(10 18 36 / 0.94);
+  --color-text-secondary: rgb(10 18 36 / 0.74);
+  --color-text-tertiary: rgb(10 18 36 / 0.62);
+  --color-accent: #0062cc;
+  --color-accent-soft: rgb(0 122 255 / 0.14);
+  --color-on-accent: #ffffff;
+  --color-separator: rgb(10 18 36 / 0.1);
+  --color-fill: rgb(10 18 36 / 0.05);
+  --color-fill-strong: rgb(10 18 36 / 0.1);
+  --color-focus: rgb(0 110 230 / 0.75);
+  --color-danger: #c42b1c;
+  --color-star: #c27a00;
+  --color-logo-shadow: rgb(16 30 60 / 0.4);
+
+  --glass-tint: rgb(255 255 255 / 0.58);
+  --glass-tint-content: rgb(255 255 255 / 0.72);
+  --glass-tint-strong: rgb(255 255 255 / 0.82);
+  --glass-tint-overlay: rgb(246 249 253 / 0.94);
+  --glass-solid: #f4f7fb;
+  --glass-sheen: rgb(255 255 255 / 0.35);
+  --glass-rim: rgb(255 255 255 / 0.95);
+  --glass-rim-shade: rgb(10 18 36 / 0.08);
+  --glass-highlight: rgb(255 255 255 / 0.8);
+  --glass-shadow: 0 12px 32px rgb(16 30 60 / 0.12), 0 1px 3px rgb(16 30 60 / 0.08);
+  --glass-shadow-small: 0 4px 12px rgb(16 30 60 / 0.12), 0 1px 2px rgb(16 30 60 / 0.08);
+  --glass-saturate: 180%;
+
+  --skeleton: rgb(10 18 36 / 0.08);
+  --backdrop-base: #dbe5f1;
+  --track: rgb(10 18 36 / 0.1);
+}
+
+// Colours, glass and shadows of the dark theme
+@mixin dark {
+  color-scheme: dark;
+
+  --color-text: rgb(255 255 255 / 0.96);
+  --color-text-secondary: rgb(232 238 252 / 0.78);
+  --color-text-tertiary: rgb(232 238 252 / 0.64);
+  --color-accent: #6cb6ff;
+  --color-accent-soft: rgb(108 182 255 / 0.18);
+  --color-on-accent: #04162c;
+  --color-separator: rgb(255 255 255 / 0.12);
+  --color-fill: rgb(255 255 255 / 0.07);
+  --color-fill-strong: rgb(255 255 255 / 0.13);
+  --color-focus: rgb(140 196 255 / 0.85);
+  --color-danger: #ff7a6b;
+  --color-star: #ffc64a;
+  --color-logo-shadow: rgb(0 0 0 / 0.55);
+
+  --glass-tint: rgb(12 18 34 / 0.4);
+  --glass-tint-content: rgb(14 20 38 / 0.74);
+  --glass-tint-strong: rgb(16 22 40 / 0.78);
+  --glass-tint-overlay: rgb(18 25 44 / 0.94);
+  --glass-solid: #121a2c;
+  --glass-sheen: rgb(255 255 255 / 0.06);
+  --glass-rim: rgb(255 255 255 / 0.28);
+  --glass-rim-shade: rgb(0 0 0 / 0.35);
+  --glass-highlight: rgb(255 255 255 / 0.1);
+  --glass-shadow: 0 18px 44px rgb(0 0 0 / 0.32), 0 1px 3px rgb(0 0 0 / 0.2);
+  --glass-shadow-small: 0 4px 12px rgb(0 0 0 / 0.3), 0 1px 2px rgb(0 0 0 / 0.2);
+  --glass-saturate: 150%;
+
+  --skeleton: rgb(255 255 255 / 0.1);
+  --backdrop-base: #0a1020;
+  --track: rgb(255 255 255 / 0.14);
+}
+
+// Denser tints and short shadows without blur, light theme
+@mixin reduced-light {
+  --glass-tint: rgb(255 255 255 / 0.82);
+  --glass-tint-content: rgb(255 255 255 / 0.8);
+  --glass-hairline: rgb(10 18 36 / 0.08);
+  --glass-shadow: 0 2px 8px -2px rgb(16 30 60 / 0.16);
+  --glass-shadow-small: 0 1px 3px rgb(16 30 60 / 0.14);
+}
+
+// Denser tints and short shadows without blur, dark theme
+@mixin reduced-dark {
+  --glass-tint: rgb(16 22 40 / 0.76);
+  --glass-tint-content: rgb(14 20 38 / 0.8);
+  --glass-hairline: rgb(255 255 255 / 0.1);
+  --glass-shadow: 0 2px 8px -2px rgb(0 0 0 / 0.4);
+  --glass-shadow-small: 0 1px 3px rgb(0 0 0 / 0.35);
+}
+
+// Stronger secondary text and separators
+@mixin more-contrast {
+  --color-text-secondary: color-mix(in srgb, var(--color-text) 92%, transparent);
+  --color-text-tertiary: color-mix(in srgb, var(--color-text) 84%, transparent);
+  --color-separator: color-mix(in srgb, var(--color-text) 32%, transparent);
+  --glass-rim: var(--color-separator);
+}
+
+// Font, radii, blur, motion, layout and the temperature and air colours
+@mixin shared {
+  --font-sans: var(--font-montserrat), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --radius-sm: 0.75rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-full: 999px;
+
+  // Inner radius = outer radius - the padding between them
+  --radius-in-card: calc(var(--radius-lg) - 1.15rem);
+  --radius-in-popup: calc(var(--radius-md) - 0.4rem);
+  --radius-settings: calc(var(--radius-sm) + 1.1rem);
+
+  --glass-blur: 22px;
+  --glass-blur-thick: 32px;
+
+  --ease-out: cubic-bezier(0.22, 0.68, 0.24, 1);
+  --ease-spring: linear(
+    0,
+    0.009,
+    0.035 2.1%,
+    0.141 4.4%,
+    0.723 12.9%,
+    0.938 16.7%,
+    1.017,
+    1.077 22.4%,
+    1.121 25.4%,
+    1.14 28.4%,
+    1.133 31.7%,
+    1.104 35.5%,
+    1.035 43.6%,
+    1.005 48.5%,
+    0.988 54.6%,
+    0.993 73.8%,
+    1
+  );
+  --duration-fast: 160ms;
+  --duration-base: 280ms;
+  --duration-slow: 600ms;
+
+  --layout-width: 76rem;
+  --gutter: clamp(1rem, 3vw, 1.5rem);
+  // Side gutters that keep clear of the notch in landscape
+  --gutter-left: max(var(--gutter), env(safe-area-inset-left));
+  --gutter-right: max(var(--gutter), env(safe-area-inset-right));
+  --header-height: 4.5rem;
+
+  --temperature-cold: #5aa7ff;
+  --temperature-cool: #5ed3c4;
+  --temperature-mild: #9ad66b;
+  --temperature-warm: #ffc145;
+  --temperature-hot: #ff7a45;
+
+  --air-1: #3bbf6a;
+  --air-2: #c9c934;
+  --air-3: #ff9f2e;
+  --air-4: #f2554a;
+  --air-5: #a35bd6;
+}

@@ -1,0 +1,82 @@
+@use "@/shared/styles/mixins" as *;
+
+.control {
+  display: grid;
+  gap: 0.5rem;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  @include section-label;
+
+  padding: 0;
+  margin-block-end: 0.5rem;
+}
+
+.track {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: var(--radius-full);
+  background: var(--color-fill);
+  box-shadow: inset 0 1px 2px var(--glass-rim-shade);
+}
+
+.option {
+  position: relative;
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-inline-size: 0;
+  min-block-size: 2.25rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: var(--radius-full);
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
+
+  @include hover {
+    color: var(--color-text);
+  }
+
+  &:has(:checked) {
+    background: var(--glass-tint-strong);
+    color: var(--color-text);
+    box-shadow:
+      inset 0 1px 0 var(--glass-highlight),
+      0 2px 8px var(--glass-rim-shade);
+  }
+
+  &:has(:focus-visible) {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 1px;
+  }
+
+  // The chosen segment is outlined in forced colours mode
+  @media (forced-colors: active) {
+    &:has(:checked) {
+      outline: 2px solid Highlight;
+    }
+  }
+}
+
+.input {
+  @include visually-hidden;
+}
+
+.description {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+}
