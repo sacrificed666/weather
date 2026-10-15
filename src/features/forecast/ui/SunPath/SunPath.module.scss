@@ -1,0 +1,108 @@
+// The arc on top, the times under its ends and the daylight below
+.sun {
+  justify-content: space-between;
+}
+
+.arc {
+  inline-size: 100%;
+  block-size: auto;
+  overflow: visible;
+}
+
+.path,
+.travelled {
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.path {
+  stroke: var(--track);
+  stroke-dasharray: 4 6;
+}
+
+// The travelled part draws itself, then the sun appears where it ends
+.travelled {
+  stroke: #ffb938;
+  animation: travel 1.2s var(--ease-out) 0.3s backwards;
+}
+
+// The arc draws itself from sunrise
+@keyframes travel {
+  from {
+    stroke-dasharray: 0 1;
+  }
+}
+
+.horizon {
+  stroke: var(--color-separator);
+  stroke-width: 1.5;
+}
+
+.dot {
+  fill: #ffc84a;
+  stroke: #fff;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 6px rgb(255 200 74 / 0.8));
+  animation: rise-sun 0.5s var(--ease-out) 1.3s backwards;
+}
+
+// The sun fades in where the arc ends
+@keyframes rise-sun {
+  from {
+    opacity: 0;
+  }
+}
+
+.times {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+// The icon sits in the term, as a list allows only terms and descriptions
+.time {
+  position: relative;
+  min-inline-size: 0;
+  padding-inline-start: 2rem;
+
+  dt {
+    color: var(--color-text-secondary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  // Sunset mirrors sunrise at the other end of the arc
+  & + & {
+    padding-inline: 0 2rem;
+    text-align: end;
+
+    .icon {
+      inset-inline: auto -0.25rem;
+    }
+  }
+}
+
+// Centred on the term and the time together
+.icon {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: -0.25rem;
+  translate: 0 -50%;
+}
+
+.note {
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: center;
+}

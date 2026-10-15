@@ -1,0 +1,9 @@
+// The picture only picks a source; layouts place and size the image inside
+.picture {
+  display: contents;
+
+  // Without a box of its own the source would take a grid or flex slot
+  > source {
+    display: none;
+  }
+}

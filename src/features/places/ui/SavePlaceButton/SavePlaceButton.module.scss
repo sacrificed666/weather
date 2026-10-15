@@ -1,0 +1,18 @@
+@use "@/shared/styles/mixins" as *;
+
+// Saving a place means nothing on paper
+.button {
+  @include hide-in-print;
+}
+
+.button[aria-pressed="true"] svg {
+  fill: currentColor;
+  animation: pop var(--duration-slow) var(--ease-spring);
+}
+
+// The star pops when a place is saved
+@keyframes pop {
+  from {
+    scale: 0.6;
+  }
+}

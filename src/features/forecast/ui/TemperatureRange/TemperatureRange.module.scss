@@ -1,0 +1,13 @@
+.range {
+  overflow: visible;
+}
+
+.track {
+  fill: var(--track);
+}
+
+.now {
+  fill: #fff;
+  stroke: rgb(0 0 0 / 0.35);
+  stroke-width: 1;
+}

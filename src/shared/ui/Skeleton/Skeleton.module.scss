@@ -1,0 +1,24 @@
+// A container can set --skeleton-radius so the blocks stay concentric with it
+.skeleton {
+  display: block;
+  border-radius: var(--skeleton-radius, var(--radius-sm));
+  background: linear-gradient(
+    100deg,
+    var(--skeleton) 30%,
+    color-mix(in oklab, var(--skeleton) 40%, transparent) 50%,
+    var(--skeleton) 70%
+  );
+  background-size: 300% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+// A light sweeps across the placeholder
+@keyframes shimmer {
+  from {
+    background-position: 100% 0;
+  }
+
+  to {
+    background-position: 0 0;
+  }
+}
