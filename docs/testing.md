@@ -71,7 +71,7 @@ Tests sit next to the code they cover as `*.test.ts(x)`, and every component has
 
 Vitest runs with `pool: "vmThreads"`: one jsdom per worker, and every test file in a fresh context of its own, which is about twice as fast as a new process per file. Built-in browser objects such as `location` cannot be redefined in that pool: wrap a call such as `location.reload()` in a small module and spy on that module instead.
 
-Unit tests run without React Compiler, the same in all three apps, so coverage counts the branches of the source rather than the cache checks the compiler adds. The production build, the end-to-end tests and Lighthouse cover the compiled code.
+Unit tests run without React Compiler, the same in all four apps, so coverage counts the branches of the source rather than the cache checks the compiler adds. The production build, the end-to-end tests and Lighthouse cover the compiled code.
 
 ## 🧭 Testing Next.js code
 
@@ -160,7 +160,7 @@ Every spec except Lighthouse runs in **Desktop Chrome** and in **Desktop Safari*
 | ☀️ `/uk?city=Kyiv`      | 🖥️ Desktop  |      ≥ 0.90 |             1 |              1 |   1 |    ≤ 360 KB |
 | ❄️ `/de?city=Reykjavik` | 📱 Mobile   |      ≥ 0.80 |             1 |              1 |   1 |    ≤ 315 KB |
 
-The pages weigh 270 to 325 KB locally. Each page weight limit sits about 35 to 40 KB above what the page weighs today, the same rule in all three apps, so a heavier dependency or a bigger prefetch fails the build early; lower the limits again when a page gets lighter.
+The pages weigh 270 to 325 KB locally. Each page weight limit sits about 35 to 40 KB above what the page weighs today, the same rule in all four apps, so a heavier dependency or a bigger prefetch fails the build early; lower the limits again when a page gets lighter.
 
 Every accessibility audit must pass as well, including the ones Lighthouse does not weigh into the score, and so must every weighted best practices audit (unweighted ones such as `valid-source-maps` cannot pass in a production build without source maps). Each run attaches the full Lighthouse HTML report to its test in the Playwright report, so a failed budget can be inspected in CI.
 
@@ -190,4 +190,4 @@ Every accessibility audit must pass as well, including the ones Lighthouse does 
 | 🧩 Functions  |      98 % |
 | 📏 Lines      |      98 % |
 
-The suite currently covers about 99.4 % of statements, 96 % of branches, 99 % of functions and 99.7 % of lines. Each threshold sits about a point below the current coverage, the same rule in all three apps, so a change can only keep or raise it; raise them again when new tests add a point. Next.js special files that only compose other components (`layout`, `page`, `error`, `global-error`, `global-not-found`, `manifest` and the image routes) and the share card assets in `src/features/seo/og` are excluded, because the end-to-end tests and the production build cover them. CI publishes a coverage summary and uploads the HTML coverage and Playwright reports.
+The suite currently covers about 99.4 % of statements, 96 % of branches, 99 % of functions and 99.7 % of lines. Each threshold sits about a point below the current coverage, the same rule in all four apps, so a change can only keep or raise it; raise them again when new tests add a point. Next.js special files that only compose other components (`layout`, `page`, `error`, `global-error`, `global-not-found`, `manifest` and the image routes) and the share card assets in `src/features/seo/og` are excluded, because the end-to-end tests and the production build cover them. CI publishes a coverage summary and uploads the HTML coverage and Playwright reports.
