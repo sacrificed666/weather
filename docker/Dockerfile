@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # Node.js on Alpine, pinned by digest; shared by every stage
-FROM node:26.10-alpine@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80 AS base
+FROM node:26.13-alpine@sha256:6bd9ab43c0ec0190ca7b2d193906cb8b7edf6e7f4afa43ddeccd6452710bffb5 AS base
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 
